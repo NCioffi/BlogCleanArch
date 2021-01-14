@@ -10,8 +10,12 @@ namespace Blog.Core.Interfaces
     {
         IPostRepository PostRepository { get; }
 
-     
 
+        IRepository<Usuario> UserRepository { get; }
+
+        IRepository<Comentario> CommentRepository { get; }
+
+        
         void SaveChanges();
 
         Task SaveChangesAsync();

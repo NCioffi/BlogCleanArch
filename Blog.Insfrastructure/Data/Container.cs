@@ -1,4 +1,5 @@
-﻿using Blog.Core.Interfaces;
+﻿using Blog.Core.Entities;
+using Blog.Core.Interfaces;
 using Blog.Insfrastructure.Repositories;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,14 @@ namespace Blog.Insfrastructure.Data
         {
             _context = context;
             PostRepository = new PostRepository(context);
+            UserRepository = new BaseRepository<Usuario>(context);
+            CommentRepository = new BaseRepository<Comentario>(context);
         }
 
         public IPostRepository PostRepository { get; private set; }
-   
+        public IRepository<Usuario> UserRepository { get; private set; }
+
+        public IRepository<Comentario> CommentRepository { get; private set; }
 
 
         public void SaveChanges()
@@ -36,5 +41,7 @@ namespace Blog.Insfrastructure.Data
         {
             _context.Dispose();
         }
+
+        
     }
 }

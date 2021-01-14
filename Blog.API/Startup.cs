@@ -36,7 +36,9 @@ namespace Blog.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers().AddNewtonsoftJson(options =>
+            services.AddControllers(options => {
+                options.Filters.Add<GlobalExceptionFilter>();
+            }).AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
@@ -54,8 +56,13 @@ namespace Blog.API
            // services.AddTransient<DbContext, BlogContext>();
 
             services.AddTransient<IService<Post>, PostService>();
+            services.AddTransient<IService<Usuario>, UserService>();
+
 
             services.AddTransient<IContainer, Container>();
+            services.AddTransient<IRepository<Usuario>, BaseRepository<Usuario>>();
+            services.AddTransient<IRepository<Comentario>, BaseRepository<Comentario>>();
+
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

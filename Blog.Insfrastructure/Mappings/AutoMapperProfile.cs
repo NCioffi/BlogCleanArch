@@ -13,6 +13,8 @@ namespace Blog.Insfrastructure.Mappings
         {
             CreateMap<Post, PostDTO>();
             CreateMap<PostDTO, Post>();
+            CreateMap<Usuario, UsuarioDTO>();
+            CreateMap<UsuarioDTO, Usuario>();
         }
     }
 }

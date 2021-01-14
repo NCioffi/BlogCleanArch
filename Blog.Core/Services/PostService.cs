@@ -1,10 +1,14 @@
 ﻿using Blog.Core.Entities;
 using Blog.Core.Interfaces;
+using Blog.Insfrastructure.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+
+
 
 namespace Blog.Core.Services
 {
@@ -23,6 +27,11 @@ namespace Blog.Core.Services
         public async Task Agregar(Post entitiy)
         {
             // Agregar validacion si existe usuario
+            var user = await _container.UserRepository.GetById(entitiy.IdUsuario);
+            if (user == null)
+            {
+                throw new BusinessException("No existe el usuario.");
+            }
 
             await _container.PostRepository.Add(entitiy);
             await _container.SaveChangesAsync();
@@ -63,7 +72,7 @@ namespace Blog.Core.Services
 
         public async Task<IEnumerable<Post>> ObtenerTodos()
         {
-
+            
             var posts = await _container.PostRepository.GetAll();
             
             return posts;
