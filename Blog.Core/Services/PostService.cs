@@ -63,7 +63,12 @@ namespace Blog.Core.Services
             return true;
         }
 
-       
+        public async Task<bool> Existe(int id)
+        {
+            if ( await ObtenerPorId(id) == null) return false;
+
+            return true;
+        }
 
         public  async Task<Post> ObtenerPorId(int id)
         {

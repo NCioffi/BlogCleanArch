@@ -1,0 +1,42 @@
+﻿@page  "/posts"
+
+
+@using System.Net.Http
+
+@using System.Net.Http.Json
+
+@using Blazor.ViewModels
+
+@inject HttpClient Http
+<h3>Posts</h3>
+
+<table>
+ @if (response != null)
+ {
+    @foreach (var item in (ICollection<Post>)response.Data)
+    {
+    <tr>
+        <td>
+            @item.Id
+        </td>
+        <td>
+            @item.IdUsuario
+        </td>
+        <td>
+            @item.Descripcion
+        </td>
+    </tr>
+    }
+ }
+
+</table>
+
+
+@code {
+
+    public string Url = "/Post";
+    public Response<Post> response = new Response<Post>();
+    protected override async Task OnInitializedAsync() =>
+        response = await Http.GetFromJsonAsync<Response<Post>>(Url);
+
+}
