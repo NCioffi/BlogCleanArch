@@ -1,0 +1,50 @@
+﻿
+@page "/posts"
+
+@using System.Net.Http
+@using System.Net.Http.Json 
+@using Blazor.Models
+@inject HttpClient Http
+
+
+<h3>Posts</h3>
+
+<div class="row">
+    <div class="col-12 text-right">
+        <a href=""> Nuevo </a>
+    </div>
+</div>
+
+<table>
+    @foreach (var oPost in (ICollection<Post>)response.Data)
+    {
+    <tr>
+        <td>
+            @oPost.Id
+        </td>
+        <td>
+            @oPost.IdUsuario
+        </td>
+        <td>
+            @oPost.Descripcion
+        </td>
+        <td>
+            @oPost.Fecha
+        </td>
+        <td>
+            <a href="/postform/@oPost.Id">Editar</a>
+            <a href="/postdelete/@oPost.Id">Eliminar</a>
+        </td>
+       
+
+    </tr>
+    }
+</table>
+
+@code {
+    public string Url = "/post";
+    public Models.Response<Post> response = new Models.Response<Post>();
+    protected override async Task OnInitializedAsync() => response = await Http.GetFromJsonAsync<Models.Response<Post>>(Url);
+
+
+}
